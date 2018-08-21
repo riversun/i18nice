@@ -5,10 +5,10 @@ It provides a simple and easy way to handle i18n (interpolation,plural)."i18nice
 It is licensed under [MIT license](https://opensource.org/licenses/MIT).
 
 # Quick start
-## demo on the web
-https://riversun.github.io/i18nice/
+## view demo on the web
+https://riversun.github.io/i18nice/index.html
 
-## demo on node.js
+## run demo on node.js
 
 **clone this project and type as follows**
 
@@ -16,9 +16,11 @@ https://riversun.github.io/i18nice/
 npm start
 ```
 
-## standalone js file
+## download standalone js file
 
 You can import standalone js into your front-end app on the browser with &lt;script&gt; tag.
+
+https://raw.githubusercontent.com/riversun/i18nice/master/dist/i18nice.js
 
 ## install via npm
 
@@ -35,14 +37,6 @@ First, create an instance of the `i18nice` class, which you will use for transla
 ```js
 var i18n = new i18nice();
  
-```
-            
-### Initialization(Set resource data)
-    
-Initialize with text resource for each language.
-
-```js   
-
 ```
 
 ### Translation
@@ -134,3 +128,10 @@ i18n.t("cars", {numCar:2});
  
  
 ```
+
+### Fallback locale
+
+```js
+i18n.setFallback("en");
+```
+
