@@ -2,46 +2,120 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+    <title>i18nice demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Example app of i18nice library">
+    <meta name="author" content="Riversun(Tom Misawa)">
 
-<textarea id="my_textarea" style="width:400px;height:300px;resize:none;font-size: 12px;overflow: auto">
-</textarea>
+</head>
+
+<body>
+<h3>Example of <a href="https://github.com/riversun/i18nice">"i18nice"</a> library</h3>
+
+<p>What is your name?
+    <select id="select_user1">
+        <option value="Erica">Erica</option>
+        <option value="Pat">Pat</option>
+    </select>
+</p>
+<p>How many cars do you have?
+    <select id="select_num_of_car1">
+        <option value="0">0</option>
+        <option value="1" selected>1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+    </select>
+</p>
+<p>What is your friend's name?
+    <select id="select_user2">
+        <option value="Tom">Tom</option>
+        <option value="Jack">Jack</option>
+    </select>
+</p>
+
+<p>How many cars does he have?
+    <select id="select_num_of_car2">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+    </select>
+</p>
+<hr/>
+
+<p>Select language
+    <select id="select_lang">
+        <option value="en">English</option>
+        <option value="ja">Japanese</option>
+    </select>
+</p>
+<hr/>
+<h4 id="my_textarea">
+</h4>
 
 <script src="i18nice.js"></script>
 
 <script>
 
-    var R = new i18nice();
 
-    R.init({
+    var i18n = new i18nice();
+
+    i18n.init({
         en: {
-            hello: "Hello!,#{user}.",
-            you_have_cars: "#{user} has ((#{num} car|#{num} cars)).",
-            she_has_cars: "She has ((no car|#{num} car|#{num} cars)).",
-            i_love_you: "I love you."
+            hello: "Hi,#{user1}.",
+            you_have_cars: "You have ((#{numCar1} car|#{numCar1} cars)).",
+            friend_has_cars: "Your friend #{user2} has ((no car|a car|#{numCar2} cars)).",
+            love_car: "Everyone likes car."
         },
         ja: {
-            hello: "#{user}さん、こんにちは。",
-            you_have_cars: "#{user}さんは、車を((#{num}台))もっている.",
-            she_has_cars: "彼女は((車を持っていない|車を#{num}台もっている|なんと、車を#{num}台持っている)).",
+            hello: "#{user1}さん、こんにちは。",
+            you_have_cars: "あなたは車を((持っていませんね|#{numCar1}台持っていますね|#{numCar1}台持っていますね))。",
+            friend_has_cars: "あなたの友達の#{user2}さんは((車を持ってないですね|車を#{numCar2}台持っています|車をなんと#{numCar2}台持っています))。",
         }
     });
 
-    R.setLocale("ja");
-    R.setFallback("en");
+    i18n.setLocale("en");
+    i18n.setFallback("en");
 
-    var text =
-        R.t("hello", {user: "Tom", num: 1}) + "\n" +
-        R.t("you_have_cars", {user: "Tom", num: 1}) + "\n" +
-        R.t("she_has_cars", {num: 2}) + "\n" +
-        R.t("i_love_you");
+    var user1Node = document.querySelector("#select_user1");
+    var user2Node = document.querySelector("#select_user2");
+    var numOfCar1Node = document.querySelector("#select_num_of_car1");
+    var numOfCar2Node = document.querySelector("#select_num_of_car2");
+    var langNode = document.querySelector("#select_lang");
+
+    update();
+
+    function update() {
+
+        var param = {
+            user1: user1Node.value,
+            user2: user2Node.value,
+            numCar1: numOfCar1Node.value,
+            numCar2: numOfCar2Node.value
+        }
 
 
-    var ta = document.querySelector("#my_textarea");
+        var text =
+            i18n.t("hello", param) +
+            i18n.t("you_have_cars", param) + "\n" +
+            i18n.t("friend_has_cars", param) + "\n" +
+            i18n.t("love_car");
 
-    ta.value = text;
+        var dispNode = document.querySelector("#my_textarea");
+        dispNode.innerText = text;
+    }
+
+
+    user1Node.addEventListener("change", update);
+    user2Node.addEventListener("change", update);
+    numOfCar1Node.addEventListener("change", update);
+    numOfCar2Node.addEventListener("change", update);
+
+    langNode.addEventListener("change", function (evt) {
+        i18n.setLocale(langNode.value);
+        update();
+    });
+
 
 </script>
 </body>
