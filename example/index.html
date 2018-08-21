@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<textarea id="my_textarea" style="width:400px;height:300px;resize:none;font-size: 12px;overflow: auto">
+</textarea>
+
+<script src="i18nice.js"></script>
+
+<script>
+
+    var R = new i18nice();
+
+    R.init({
+        en: {
+            hello: "Hello!,#{user}.",
+            you_have_cars: "#{user} has ((#{num} car|#{num} cars)).",
+            she_has_cars: "She has ((no car|#{num} car|#{num} cars)).",
+            i_love_you: "I love you."
+        },
+        ja: {
+            hello: "#{user}さん、こんにちは。",
+            you_have_cars: "#{user}さんは、車を((#{num}台))もっている.",
+            she_has_cars: "彼女は((車を持っていない|車を#{num}台もっている|なんと、車を#{num}台持っている)).",
+        }
+    });
+
+    R.setLocale("ja");
+    R.setFallback("en");
+
+    var text =
+        R.t("hello", {user: "Tom", num: 1}) + "\n" +
+        R.t("you_have_cars", {user: "Tom", num: 1}) + "\n" +
+        R.t("she_has_cars", {num: 2}) + "\n" +
+        R.t("i_love_you");
+
+
+    var ta = document.querySelector("#my_textarea");
+
+    ta.value = text;
+
+</script>
+</body>
+</html>
