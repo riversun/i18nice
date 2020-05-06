@@ -1,6 +1,6 @@
 {
   "name": "i18nice",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Simple adn asy i18n library",
   "main": "index.js",
   "scripts": {
