@@ -58,63 +58,76 @@
 <script>
 
 
-    var i18n = new i18nice();
+  var i18n = new i18nice();
 
-    i18n.init({
-        en: {
-            hello: "Hi,#{user1}.",
-            you_have_cars: "You have ((#{numCar1} car|#{numCar1} cars)).",
-            friend_has_cars: "Your friend #{user2} has ((no car|a car|#{numCar2} cars)).",
-            love_car: "Everyone likes car."
-        },
-        ja: {
-            hello: "#{user1}さん、こんにちは。",
-            you_have_cars: "あなたは車を((持っていませんね|#{numCar1}台持っていますね|#{numCar1}台持っていますね))。",
-            friend_has_cars: "あなたの友達の#{user2}さんは((車を持ってないですね|車を#{numCar2}台持っています|車をなんと#{numCar2}台持っています))。",
-        }
-    });
+  i18n.init({
+    en: {
+      hello: "Hi,#{user1}.",
+      you_have_cars: "You have ((#{numCar1} car|#{numCar1} cars)).",
+      friend_has_cars: "Your friend #{user2} has ((no car|a car|#{numCar2} cars)).",
+      love_car: "Everyone likes car.",
+      survey: "This is the result of #{ordinal} time survey.Thank you for your cooperation #{user1},#{user2} at survey named 'No.#{ordinal2} query'",
+      ordinal: ['1st', '2nd'],
+      ordinal2: ['1', '2'],
+    },
+    ja: {
+      hello: "#{user1}さん、こんにちは。",
+      you_have_cars: "あなたは車を((持っていませんね|#{numCar1}台持っていますね|#{numCar1}台持っていますね))。",
+      friend_has_cars: "あなたの友達の#{user2}さんは((車を持ってないですね|車を#{numCar2}台持っています|車をなんと#{numCar2}台持っています))。",
+      love_car: "みんな車が好き。",
+      survey: "これが#{ordinal}目の調査結果でした。ということで「#{ordinal2}調査」へのご協力ありがとうございました#{user1}さん、#{user2}さん.",
+      ordinal: ['1つ', '2つ'],
+      ordinal2: ['第1回', '第2回']
 
-    i18n.setLocale("en");
-    i18n.setFallback("en");
+    }
+  });
 
-    var user1Node = document.querySelector("#select_user1");
-    var user2Node = document.querySelector("#select_user2");
-    var numOfCar1Node = document.querySelector("#select_num_of_car1");
-    var numOfCar2Node = document.querySelector("#select_num_of_car2");
-    var langNode = document.querySelector("#select_lang");
+  i18n.setLocale("en");
+  i18n.setFallback("en");
 
-    update();
+  var user1Node = document.querySelector("#select_user1");
+  var user2Node = document.querySelector("#select_user2");
+  var numOfCar1Node = document.querySelector("#select_num_of_car1");
+  var numOfCar2Node = document.querySelector("#select_num_of_car2");
+  var langNode = document.querySelector("#select_lang");
 
-    function update() {
+  update();
 
-        var param = {
-            user1: user1Node.value,
-            user2: user2Node.value,
-            numCar1: numOfCar1Node.value,
-            numCar2: numOfCar2Node.value
-        }
+  function update() {
 
-
-        var text =
-            i18n.t("hello", param) +
-            i18n.t("you_have_cars", param) + "\n" +
-            i18n.t("friend_has_cars", param) + "\n" +
-            i18n.t("love_car");
-
-        var dispNode = document.querySelector("#my_textarea");
-        dispNode.innerText = text;
+    var param = {
+      user1: user1Node.value,
+      user2: user2Node.value,
+      numCar1: numOfCar1Node.value,
+      numCar2: numOfCar2Node.value
     }
 
+    var text =
+      i18n.t("hello", param) +
+      i18n.t("you_have_cars", param) + "\n" +
+      i18n.t("friend_has_cars", param) + "\n" +
+      i18n.t("love_car") + "\n" +
+      i18n.t("survey", {
+        ordinal_index: 0,
+        ordinal2_index: 0,
+        user1: user1Node.value,
+        user2: user2Node.value,
+      }) + "\n";
 
-    user1Node.addEventListener("change", update);
-    user2Node.addEventListener("change", update);
-    numOfCar1Node.addEventListener("change", update);
-    numOfCar2Node.addEventListener("change", update);
+    var dispNode = document.querySelector("#my_textarea");
+    dispNode.innerText = text;
+  }
 
-    langNode.addEventListener("change", function (evt) {
-        i18n.setLocale(langNode.value);
-        update();
-    });
+
+  user1Node.addEventListener("change", update);
+  user2Node.addEventListener("change", update);
+  numOfCar1Node.addEventListener("change", update);
+  numOfCar2Node.addEventListener("change", update);
+
+  langNode.addEventListener("change", function(evt) {
+    i18n.setLocale(langNode.value);
+    update();
+  });
 
 
 </script>
