@@ -87,6 +87,8 @@ i18n.t("hello", {user1:"Tom"});
 
 ### Ordinal Number
 
+- Ordinal Number in template
+
 ```js
 
 i18n.init({
@@ -106,6 +108,51 @@ i18n.t("hello", {user1:"Tom",ordinal_index:1});
  =>"Hi,Tom.Come into the second room."
 
 ```
+
+- Ordial Number as itself
+
+```js
+
+i18n.init({
+    en: {
+        hello: "Hi,#{user1}.Come into the #{ordinal} room.",
+        ordinal:["first","second","third"],
+    },
+    ja: {
+        hello: "#{user1}さん、こんにちは。#{ordinal}のお部屋にお入りください",
+        ordinal:["1つめ","2つめ","3つめ"],
+    }
+});
+
+i18n.setLocale("en");
+
+i18n.t("ordinal",{ordinal_index:1});
+ =>"first"
+
+```
+
+- Ordial Number as itself with no option
+
+```js
+
+i18n.init({
+    en: {
+        hello: "Hi,#{user1}.Come into the #{ordinal} room.",
+        ordinal:["first","second","third"],
+    },
+    ja: {
+        hello: "#{user1}さん、こんにちは。#{ordinal}のお部屋にお入りください",
+        ordinal:["1つめ","2つめ","3つめ"],
+    }
+});
+
+i18n.setLocale("en");
+
+i18n.t("ordinal");
+ =>["first","second","third"] // returns array itself
+
+```
+
 
 
 ### Pluralization
