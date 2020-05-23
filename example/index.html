@@ -112,7 +112,13 @@
         ordinal2_index: 0,
         user1: user1Node.value,
         user2: user2Node.value,
-      }) + "\n";
+      }) +
+      "\n" +
+      "\n" +
+      "Example Ordinal number ------------" +
+      "\n" +
+      i18n.t("ordinal", { ordinal_index: 0 }) + "\n" +
+      i18n.t("ordinal") + "\n";
 
     var dispNode = document.querySelector("#my_textarea");
     dispNode.innerText = text;

@@ -111,10 +111,10 @@ var i18nice =
             }
 
             // replace a placeholder for number
-            text = me.replaceForNumber(text, param, locale);
+            text = me.replaceForNumber(text, param, { locale, sentenceId });
 
             // replace a placeholder for text
-            text = me.replaceForNormal(text, param, locale);
+            text = me.replaceForNormal(text, param, { locale, sentenceId });
 
             return text;
           }
@@ -135,6 +135,11 @@ var i18nice =
        */
       i18nice.prototype.replaceForNumber = function(text, param) {
         var me = this;
+
+        // is ordinal directory specified
+        if (Array.isArray(text)) {
+          return text;
+        }
 
         var replacedStr = text.replace(me.REGEXP_4_ALL_NUMBER_PLACEHOLDERS, function(placeHolderForMultiple) {
 
@@ -218,8 +223,37 @@ var i18nice =
        * @param param
        * @returns {void | string}
        */
-      i18nice.prototype.replaceForNormal = function(text, param, locale) {
+      i18nice.prototype.replaceForNormal = function(text, param, opt) {
         var me = this;
+
+        var locale = opt ? opt.locale : null;
+        var sentenceId = opt ? opt.sentenceId : null;
+
+        // is ordinal directory specified
+        if (Array.isArray(text)) {
+
+          var funcHandleOrdinal = function(propName) {
+            var resForLocale = me.data[locale];
+            if (resForLocale) {
+              var candidateForOrdinal = resForLocale[propName];
+
+              if (candidateForOrdinal && Array.isArray(candidateForOrdinal)) {
+                var propertyNameOfOrdinalIndex = propName + "_index";
+                if (param && Number.isInteger(param[propertyNameOfOrdinalIndex])) {
+                  return candidateForOrdinal[param[propertyNameOfOrdinalIndex]];
+                }
+              }
+            }
+          }
+          var result = funcHandleOrdinal(sentenceId);
+          if (result) {
+            return result;
+          } else {
+            // if undefined
+            return text;
+          }
+        }
+
         var replacedStr = text.replace(me.REGEXP_4_ALL_PLACEHOLDERS, function(match) {
 
           // Get the contents enclosed with # {}
@@ -241,8 +275,8 @@ var i18nice =
               var candidateForOrdinal = resForLocale[propName];
 
               if (candidateForOrdinal && Array.isArray(candidateForOrdinal)) {
-                const propertyNameOfOrdinalIndex = propName + "_index";
-                if (Number.isInteger(param[propertyNameOfOrdinalIndex])) {
+                var propertyNameOfOrdinalIndex = propName + "_index";
+                if (param && Number.isInteger(param[propertyNameOfOrdinalIndex])) {
                   return candidateForOrdinal[param[propertyNameOfOrdinalIndex]];
                 }
               }
