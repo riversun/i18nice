@@ -42,8 +42,22 @@ var i18nice =
        */
       i18nice.prototype.setLocale = function(locale) {
         var me = this;
-        me.locale = locale;
+        if (me.locale !== locale) {
+          const oldLocale = me.locale;
+          me.locale = locale;
+          if (me.localeChangeListener) {
+            me.localeChangeListener({ localeFrom: oldLocale, locale: locale });
+          }
+        }
+      };
 
+      /**
+       * Set change listener for locale change
+       * @param listener
+       */
+      i18nice.prototype.setLocaleChangeListener = function(listener) {
+        var me = this;
+        me.localeChangeListener = listener;
       };
 
       /**
@@ -317,5 +331,6 @@ var i18nice =
   )();
 
 module.exports = i18nice;
+
 },{}]},{},[1])(1)
 });

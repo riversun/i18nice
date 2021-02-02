@@ -85,6 +85,10 @@
   i18n.setLocale("en");
   i18n.setFallback("en");
 
+  i18n.setLocaleChangeListener((data)=>{
+    console.log(`locale changed`,data);
+  });
+
   var user1Node = document.querySelector("#select_user1");
   var user2Node = document.querySelector("#select_user2");
   var numOfCar1Node = document.querySelector("#select_num_of_car1");

@@ -1,6 +1,6 @@
 {
   "name": "i18nice",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "Simple and easy i18n library",
   "main": "index.js",
   "scripts": {
@@ -8,6 +8,7 @@
     "server:nodejs": "http-server ./example -p 7000 -o -c-1",
     "watch": "run-p watch:*",
     "build": "browserify index.js --standalone i18nice -o dist/i18nice.js",
+    "release": "browserify index.js --standalone i18nice -o dist/i18nice.js",
     "watch:example-js": "watchify index.js --standalone i18nice -o example/i18nice.js -v",
     "test": "mocha"
   },
