@@ -52,6 +52,15 @@ var i18nice =
       };
 
       /**
+       * Returns current locale
+       * @param locale
+       */
+      i18nice.prototype.getLocale = function() {
+        var me = this;
+        return me.locale;
+      };
+
+      /**
        * Set change listener for locale change
        * @param listener
        */
@@ -61,12 +70,30 @@ var i18nice =
       };
 
       /**
+       * Returns locale change listener
+       * @returns {*}
+       */
+      i18nice.prototype.getLocaleChangeListener = function() {
+        var me = this;
+        return me.localeChangeListener;
+      };
+
+      /**
        * Set fallback locale
        * @param locale
        */
       i18nice.prototype.setFallback = function(locale) {
         var me = this;
         me.fallbackLocale = locale;
+      };
+
+      /**
+       * Returns fallback locale
+       * @returns {string}
+       */
+      i18nice.prototype.getFallback = function() {
+        var me = this;
+        return me.fallbackLocale;
       };
 
       /**
